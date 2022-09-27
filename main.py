@@ -1,6 +1,7 @@
 import tkinter as tk
 from os import path
 from time import strftime
+from diccionarios import *
 
 carpeta = path.dirname(path.realpath(__file__)[0:-7])
 
@@ -9,66 +10,125 @@ ventana.title('Guasap')
 ventana.geometry("480x640")
 # ventana.resizable(0,0)
 
-
-#region diccionarios
-
-español={
-    'c_1': 'Pensá un número de dos cifras (que no sean iguales)',
-    'c_2': 'Invertí el orden de las cifras',
-    'c_3': '¿El nuevo número es mayor o menor que el primero?',
-    'c_4': 'Restá el número que pensaste del nuevo número',
-    'c_5': 'Sumá las cifras del número que pensaste al principio',
-    'c_6': 'Decime los números que obtuviste',
-    'c_7': 'Pensaste el',
-    'u_1': 'Ya está',
-    'u_2': 'Es mayor',
-    'u_3': 'Es menor',
-    'u_4': 'el primero y',
-    'u_5': 'el segundo',
-
-    'en_linea': 'En línea'
-}
-
-colores_claro = {
-    'arriba': '#008069',
-    'letra_arriba': '#FFFFFF',
-    'label_c': '#FFFFFF',
-    'label_u': '#E7FFDB',
-    'letra_chat': '#111B21',
-    'hora': '#54656F',
-    'fondo': '/img/fondo_claro.png',
-    'carita': '/img/carita_clara.png'
-}
-colores_oscuro = {
-    'arriba': '#202C33',
-    'letra_arriba': '#E9EDEF',
-    'label_c': '#202C33',
-    'label_u': '#005C4B',
-    'letra_chat': '#E9EDEF',
-    'hora': '#8696A0',
-    'fondo': '/img/fondo_oscuro.png',
-    'carita': '/img/carita_oscura.png'
-}
-
-#endregion
-
 #region variables
 
 textos = español
 colores = colores_claro
 
+hora = strftime('%H:%M')
 mensaje = tk.StringVar()
 lista_chat_c = []
 lista_chat_c = []
+paso = 0
+chat_c = ''
+posicion_chat = 0
+primer_chat = 0
 
 #endregion
 
-#region labels_chat
+#region funciones
 
-lista_label_chat_c = []
-lista_label_chat_u = []
+def actualizar_chat(u, c):
+    global posicion_chat
+    global primer_chat
 
-hora = strftime('%H:%M')
+    if primer_chat <= 6:
+        lista_label_chat_c[0][primer_chat].place(relx=0)
+        lista_label_chat_c[1][primer_chat].place(relx=0)
+
+        lista_label_chat_u[0][primer_chat].place(relx=0)
+        lista_label_chat_u[1][primer_chat].place(relx=0)
+        lista_label_chat_u[2][primer_chat].place(relx=0)
+
+        primer_chat += 1
+
+    for i in range(posicion_chat, posicion_chat+7):
+        if i == posicion_chat:
+            lista_label_chat_c[0][posicion_chat].configure(text=c)
+            lista_label_chat_c[1][posicion_chat].configure(text=hora)
+
+            lista_label_chat_u[0][posicion_chat].configure(text=u)
+            lista_label_chat_u[1][posicion_chat].configure(text=hora)
+        
+        lista_label_chat_c[0][i-posicion_chat].configure(text=c)
+        lista_label_chat_c[0][i-posicion_chat].place(y = 553-(i-posicion_chat)*84)
+        lista_label_chat_c[1][i-posicion_chat].configure(text=hora)
+        lista_label_chat_c[1][i-posicion_chat].place(y = 553-(i-posicion_chat)*84)
+
+        lista_label_chat_u[0][i-posicion_chat].configure(text=u)
+        lista_label_chat_u[0][i-posicion_chat].place(y = 511-(i-posicion_chat)*84)
+        lista_label_chat_u[1][i-posicion_chat].configure(text=hora)
+        lista_label_chat_u[1][i-posicion_chat].place(y = 511-(i-posicion_chat)*84)
+        lista_label_chat_u[2][i-posicion_chat].place(y = 511-(i-posicion_chat)*84)
+
+    print(posicion_chat)
+    if posicion_chat >= 6:
+        posicion_chat = 0
+    else:
+        posicion_chat += 1
+
+def paso_0():
+    chat_c = textos['saludo']
+    # lista_label_chat_c[posicion_chat] = chat_c
+    actualizar_chat(entry_mensaje.get(), chat_c)
+
+def paso_1():
+    pass
+
+def paso_2():
+    pass
+
+def paso_3():
+    pass
+
+def paso_4():
+    pass
+
+def paso_5():
+    pass
+
+def paso_6():
+    pass
+
+def paso_7():
+    pass
+
+def paso_8():
+    pass
+
+def paso_9():
+    pass
+
+def paso_10():
+    pass
+
+def enviar():
+    mensaje_strip = mensaje.get().strip()
+    if mensaje_strip != '':
+        match paso:
+            case 0:
+                paso_0()
+            case 1:
+                paso_1()
+            case 2:
+                paso_2()
+            case 3:
+                paso_3()
+            case 4:
+                paso_4()
+            case 5:
+                paso_5()
+            case 6:
+                paso_6()
+            case 7:
+                paso_7()
+            case 8:
+                paso_8()
+            case 9:
+                paso_9()
+            case 10:
+                paso_10()
+
 
 img_fondo = tk.PhotoImage(file=carpeta+colores['fondo'])
 img_visto = tk.PhotoImage(file=carpeta+'/img/visto.png')
@@ -76,46 +136,131 @@ img_visto = tk.PhotoImage(file=carpeta+'/img/visto.png')
 label_fondo = tk.Label(ventana, image=img_fondo)
 label_fondo.place(x = 0, y = 0)
 
-class LabelChatC:
-    def __init__(self, text, y):
-        self.label_chat_c = tk.Label(ventana, text=text, bg=colores['label_c'], fg=colores['letra_chat'], font=('Calibri', 13))
-        self.label_chat_c.place(x = 40, y = y, height=33)
-        label_hora_c = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
-        label_hora_c.place(x = 9, y = y, width=31, height=33)
+#region labels_chat
 
-class LabelChatU:
-    def __init__(self, text, y):
-        label_chat_u = tk.Label(ventana, text=text, bg=colores['label_u'], fg=colores['letra_chat'], font=('Calibri', 13))
-        label_chat_u.place(x = 422, y = y, height=33, anchor=tk.NE)
+label_chat_c_0 = tk.Label(ventana, text='', bg=colores['label_c'], fg=colores['letra_chat'], font=('Calibri', 13))
+label_chat_c_1 = tk.Label(ventana, text='', bg=colores['label_c'], fg=colores['letra_chat'], font=('Calibri', 13))
+label_chat_c_2 = tk.Label(ventana, text='', bg=colores['label_c'], fg=colores['letra_chat'], font=('Calibri', 13))
+label_chat_c_3 = tk.Label(ventana, text='', bg=colores['label_c'], fg=colores['letra_chat'], font=('Calibri', 13))
+label_chat_c_4 = tk.Label(ventana, text='', bg=colores['label_c'], fg=colores['letra_chat'], font=('Calibri', 13))
+label_chat_c_5 = tk.Label(ventana, text='', bg=colores['label_c'], fg=colores['letra_chat'], font=('Calibri', 13))
+label_chat_c_6 = tk.Label(ventana, text='', bg=colores['label_c'], fg=colores['letra_chat'], font=('Calibri', 13))
 
-        label_visto = tk.Label(ventana, image=img_visto, bg=colores['label_u'])
-        label_visto.place(x = 471, y = y, height=33, anchor=tk.NE)
+label_chat_c_0.place(x = 40, height=33, relx=1)
+label_chat_c_1.place(x = 40, height=33, relx=1)
+label_chat_c_2.place(x = 40, height=33, relx=1)
+label_chat_c_3.place(x = 40, height=33, relx=1)
+label_chat_c_4.place(x = 40, height=33, relx=1)
+label_chat_c_5.place(x = 40, height=33, relx=1)
+label_chat_c_6.place(x = 40, height=33, relx=1)
 
-        label_hora_u = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
-        label_hora_u.place(x = 453, y = y, width=31, height=33, anchor=tk.NE)
+label_hora_c_0 = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_c_1 = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_c_2 = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_c_3 = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_c_4 = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_c_5 = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_c_6 = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
 
-labelsita = LabelChatC(textos['c_1'], 256)
+label_hora_c_0.place(x = 9, width=31, height=33, relx=1)
+label_hora_c_1.place(x = 9, width=31, height=33, relx=1)
+label_hora_c_2.place(x = 9, width=31, height=33, relx=1)
+label_hora_c_3.place(x = 9, width=31, height=33, relx=1)
+label_hora_c_4.place(x = 9, width=31, height=33, relx=1)
+label_hora_c_5.place(x = 9, width=31, height=33, relx=1)
+label_hora_c_6.place(x = 9, width=31, height=33, relx=1)
 
-labelsita = LabelChatC(textos['c_5'], 320)
+label_chat_u_0 = tk.Label(ventana, text='', bg=colores['label_u'], fg=colores['letra_chat'], font=('Calibri', 13))
+label_chat_u_1 = tk.Label(ventana, text='', bg=colores['label_u'], fg=colores['letra_chat'], font=('Calibri', 13))
+label_chat_u_2 = tk.Label(ventana, text='', bg=colores['label_u'], fg=colores['letra_chat'], font=('Calibri', 13))
+label_chat_u_3 = tk.Label(ventana, text='', bg=colores['label_u'], fg=colores['letra_chat'], font=('Calibri', 13))
+label_chat_u_4 = tk.Label(ventana, text='', bg=colores['label_u'], fg=colores['letra_chat'], font=('Calibri', 13))
+label_chat_u_5 = tk.Label(ventana, text='', bg=colores['label_u'], fg=colores['letra_chat'], font=('Calibri', 13))
+label_chat_u_6 = tk.Label(ventana, text='', bg=colores['label_u'], fg=colores['letra_chat'], font=('Calibri', 13))
 
-labelsita2 = LabelChatU('holiasdiasdasdlasdlasld', 295)
+label_chat_u_0.place(x = 422, height=33, anchor=tk.NE, relx=1)
+label_chat_u_1.place(x = 422, height=33, anchor=tk.NE, relx=1)
+label_chat_u_2.place(x = 422, height=33, anchor=tk.NE, relx=1)
+label_chat_u_3.place(x = 422, height=33, anchor=tk.NE, relx=1)
+label_chat_u_4.place(x = 422, height=33, anchor=tk.NE, relx=1)
+label_chat_u_5.place(x = 422, height=33, anchor=tk.NE, relx=1)
+label_chat_u_6.place(x = 422, height=33, anchor=tk.NE, relx=1)
 
-# for i in range(7):
-#     labelsina = LabelChatC(str(i)+'asd'+textos['c_5'], 553 - i * 84)
-#     lista_label_c.append(labelsina)
+label_hora_u_0 = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_u_1 = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_u_2 = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_u_3 = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_u_4 = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_u_5 = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_u_6 = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
 
-# for i in range(7):
-#     labelsina = LabelChatU(str(i)+'asd'+textos['c_1'], 511 - i * 84)
-#     lista_label_c.append(labelsina)
+label_hora_u_0.place(x = 453, width=31, height=33, anchor=tk.NE, relx=1)
+label_hora_u_1.place(x = 453, width=31, height=33, anchor=tk.NE, relx=1)
+label_hora_u_2.place(x = 453, width=31, height=33, anchor=tk.NE, relx=1)
+label_hora_u_3.place(x = 453, width=31, height=33, anchor=tk.NE, relx=1)
+label_hora_u_4.place(x = 453, width=31, height=33, anchor=tk.NE, relx=1)
+label_hora_u_5.place(x = 453, width=31, height=33, anchor=tk.NE, relx=1)
+label_hora_u_6.place(x = 453, width=31, height=33, anchor=tk.NE, relx=1)
 
-#inicializo labels de chat
-for i in range(7):
-    label_chat_c = LabelChatC('', -35 - i * 84)
-    lista_label_chat_c.append(label_chat_c)
+label_visto_0 = tk.Label(ventana, image=img_visto, bg=colores['label_u'])
+label_visto_1 = tk.Label(ventana, image=img_visto, bg=colores['label_u'])
+label_visto_2 = tk.Label(ventana, image=img_visto, bg=colores['label_u'])
+label_visto_3 = tk.Label(ventana, image=img_visto, bg=colores['label_u'])
+label_visto_4 = tk.Label(ventana, image=img_visto, bg=colores['label_u'])
+label_visto_5 = tk.Label(ventana, image=img_visto, bg=colores['label_u'])
+label_visto_6 = tk.Label(ventana, image=img_visto, bg=colores['label_u'])
 
-for i in range(7):
-    label_chat_u = LabelChatU('', -77 - i * 84)
-    lista_label_chat_c.append(label_chat_u)
+label_visto_0.place(x = 471, height=33, anchor=tk.NE, relx=1)
+label_visto_1.place(x = 471, height=33, anchor=tk.NE, relx=1)
+label_visto_2.place(x = 471, height=33, anchor=tk.NE, relx=1)
+label_visto_3.place(x = 471, height=33, anchor=tk.NE, relx=1)
+label_visto_4.place(x = 471, height=33, anchor=tk.NE, relx=1)
+label_visto_5.place(x = 471, height=33, anchor=tk.NE, relx=1)
+label_visto_6.place(x = 471, height=33, anchor=tk.NE, relx=1)
+
+lista_label_chat_c = [[
+    label_chat_c_0,
+    label_chat_c_1,
+    label_chat_c_2,
+    label_chat_c_3,
+    label_chat_c_4,
+    label_chat_c_5,
+    label_chat_c_6
+], [
+    label_hora_c_0,
+    label_hora_c_1,
+    label_hora_c_2,
+    label_hora_c_3,
+    label_hora_c_4,
+    label_hora_c_5,
+    label_hora_c_6
+]]
+
+lista_label_chat_u = [[
+    label_chat_u_0,
+    label_hora_u_1,
+    label_chat_u_2,
+    label_chat_u_3,
+    label_chat_u_4,
+    label_chat_u_5,
+    label_chat_u_6
+], [
+    label_hora_u_0,
+    label_hora_u_1,
+    label_hora_u_2,
+    label_hora_u_3,
+    label_hora_u_4,
+    label_hora_u_5,
+    label_hora_u_6
+], [
+    label_visto_0,
+    label_visto_1,
+    label_visto_2,
+    label_visto_3,
+    label_visto_4,
+    label_visto_5,
+    label_visto_6
+]]
 
 #endregion
 
@@ -150,15 +295,16 @@ button_reiniciar = tk.Button(ventana, image=img_reiniciar, bg=colores['arriba'],
 button_reiniciar.place(x = 467, y = 29, width=22, anchor=tk.E)
 
 entry_mensaje = tk.Entry(ventana, textvariable=mensaje, bg=colores['label_c'], fg=colores['letra_chat'], font=('Calibri', 14), border=0)
-entry_mensaje.place(x = 39, y = 635, width=400, height=40, anchor=tk.SW)
+entry_mensaje.place(x = 39, y = 635, width=394, height=40, anchor=tk.SW)
 
 label_carita = tk.Label(ventana, image=img_carita, bg=colores['label_c'], justify='center')
 label_carita.place(x = 5, y = 635, width=34, height=40, anchor=tk.SW)
 
-button_enviar = tk.Button(ventana, image=img_enviar, bg=colores['label_c'], border=0)
+button_enviar = tk.Button(ventana, image=img_enviar, bg=colores['label_c'], border=0, command=enviar)
 button_enviar.place(x = 475, y = 635, height=40, anchor=tk.SE)
 
 #endregion
+
 
 
 
