@@ -1,11 +1,11 @@
 español={
-
     'c_00': '¡Hola! ¿Querés que te adivine un número que pienses?',
     'c_01': '¿Querés volver a empezar?',
 
     'c_10': 'Pensá un número de dos cifras (que no sean iguales)',
-    'c_11': 'Bueno, si no querés no te voy a obligar',
-    'c_12': 'No entiendo tu respuesta. ¿Querés SÍ o NO?',
+    'c_11': 'Bueno, pensá un número de dos cifras (que no sean iguales)',
+    'c_12': 'Bueno, si no querés no te voy a obligar',
+    'c_13': 'No entiendo tu respuesta. ¿Querés SÍ o NO?',
 
     'c_20': 'Invertí el orden de las cifras',
 
@@ -23,7 +23,8 @@ español={
     'c_61': 'No puede darte ese número. Sacá bien la cuenta',
     'c_62': 'Escribime el número solamente',
 
-    'en_linea': 'En línea'
+    'en_linea': 'En línea',
+    'reiniciar': 'Quiero empezar de nuevo'
 }
 
 colores_claro = {
@@ -36,6 +37,7 @@ colores_claro = {
     'fondo': '/img/fondo_claro.png',
     'carita': '/img/carita_clara.png'
 }
+
 colores_oscuro = {
     'arriba': '#202C33',
     'letra_arriba': '#E9EDEF',
