@@ -34,6 +34,20 @@ tema = 0
 
 #region menu
 
+def ver_foto():
+    button_foto_grande.place(relx=0)
+    button_foto.config(command=volver)
+    entry_mensaje.config(state='disabled')
+    button_enviar.config(state='disabled')
+    button_reiniciar.config(state='disabled')
+
+def volver():
+    button_foto_grande.place(relx=1)
+    button_foto.config(command=ver_foto)
+    entry_mensaje.config(state='normal')
+    button_enviar.config(state='normal')
+    button_reiniciar.config(state='normal')
+
 def cambiar_lenguaje():
     messagebox.showerror('Error', 'No hay otros idiomas instalados actualmente')
 
@@ -47,18 +61,18 @@ def cambiar_tema():
         tema = 0
 
     label_superior.config(bg=colores['arriba'])
-    label_foto.config(bg=colores['arriba'])
+    button_foto.config(bg=colores['arriba'])
+    button_foto_grande.config(bg=colores['arriba'])
     label_clotilde.config(bg=colores['arriba'])
     label_en_linea.config(bg=colores['arriba'])
     button_lenguaje.config(bg=colores['arriba'])
     button_tema .config(bg=colores['arriba'])
     button_reiniciar.config(bg=colores['arriba'])
-    entry_mensaje.config(bg=colores['label_c'])
     button_enviar .config(bg=colores['label_c'])
     img_fondo.config(file=carpeta+colores['fondo'])
     img_carita.config(file=carpeta+colores['carita'])
     label_carita.config(bg=colores['label_c'])
-    entry_mensaje.configure(bg=colores['label_c'], fg=colores['letra_chat'], insertbackground=colores['letra_chat'])
+    entry_mensaje.config(bg=colores['label_c'], fg=colores['letra_chat'], insertbackground=colores['letra_chat'], disabledbackground=colores['label_c'], disabledforeground=colores['letra_chat'], )
 
     for i in lista_label_chat_c[0]:
         i.config(bg=colores['label_c'], fg=colores['letra_chat'])
@@ -78,6 +92,7 @@ def cambiar_tema():
 def reiniciar():
     global paso
     if estados[0] != 0:
+        entry_mensaje.delete(0, tk.END)
         mensaje_strip = textos['reiniciar']
         entry_mensaje.insert(0, mensaje_strip)
         estados[1] = 1
@@ -202,7 +217,7 @@ def paso_4():
 def paso_5():
     global paso
     try:
-        if int(mensaje_strip) < 99:
+        if int(mensaje_strip) < 99 and int(mensaje_strip) > 0:
             actualizar_chat(textos['c_50'])
             estados[5] = int(mensaje_strip)
             paso = 6
@@ -214,12 +229,17 @@ def paso_5():
 def paso_6():
     global paso
     try:
-        if int(mensaje_strip) < 18:
+        if int(mensaje_strip) < 18 and int(mensaje_strip) > 2:
             estados[6] = int(mensaje_strip)
 
-            num_1 = int((estados[6] - 2) / 2)
-            num_2 = int((estados[6] + 2) / 2)
-            numero_adivinado = str(num_1) + str(num_2)
+            num_0 = int((estados[5]) / 9)
+            num_1 = int((estados[6] - num_0) / 2)
+            num_2 = int((estados[6] + num_0) / 2)
+            
+            if estados[4] == 1:
+                numero_adivinado = str(num_1) + str(num_2)
+            else:
+                numero_adivinado = str(num_2) + str(num_1)
 
             actualizar_chat(textos['c_60'] + numero_adivinado)
             paso = 0
@@ -368,6 +388,7 @@ lista_label_chat_u = [[
 
 img_enviar = tk.PhotoImage(file=carpeta+'/img/enviar.png')
 img_foto = tk.PhotoImage(file=carpeta+'/img/foto.png')
+img_foto_grande = tk.PhotoImage(file=carpeta+'/img/foto_grande.png')
 img_lenguaje = tk.PhotoImage(file=carpeta+'/img/lenguaje.png')
 img_reiniciar = tk.PhotoImage(file=carpeta+'/img/reiniciar.png')
 img_tema = tk.PhotoImage(file=carpeta+'/img/tema.png')
@@ -376,8 +397,11 @@ img_carita = tk.PhotoImage(file=carpeta+colores['carita'])
 label_superior = tk.Label(ventana, bg=colores['arriba'])
 label_superior.place(x = 0, y = 0, width=480, height=57)
 
-label_foto = tk.Label(ventana, image=img_foto, bg=colores['arriba'])
-label_foto.place(x = 13, y = 7)
+button_foto = tk.Button(ventana, image=img_foto, bg=colores['arriba'], cursor='hand2', border=0, command=ver_foto)
+button_foto.place(x = 13, y = 7)
+
+button_foto_grande = tk.Button(ventana, bg=colores['arriba'], image=img_foto_grande, border=0, cursor='hand2', command=volver)
+button_foto_grande.place(x = 240, y = 112, anchor=tk.N, relx=1)
 
 label_clotilde = tk.Label(ventana, text='Clotilde', bg=colores['arriba'], fg=colores['letra_arriba'], font=('Calibri Bold', 15))
 label_clotilde.place(x = 60, y = 11)
@@ -394,7 +418,7 @@ button_tema.place(x = 423, y = 29, width=22, anchor=tk.E)
 button_reiniciar = tk.Button(ventana, image=img_reiniciar, bg=colores['arriba'], border=0, cursor='hand2', command=reiniciar)
 button_reiniciar.place(x = 467, y = 29, width=22, anchor=tk.E)
 
-entry_mensaje = tk.Entry(ventana, textvariable=mensaje, bg=colores['label_c'], fg=colores['letra_chat'], insertbackground=colores['letra_chat'], font=('Calibri', 14), border=0)
+entry_mensaje = tk.Entry(ventana, textvariable=mensaje, bg=colores['label_c'], fg=colores['letra_chat'], disabledbackground=colores['label_c'], disabledforeground=colores['letra_chat'], insertbackground=colores['letra_chat'], font=('Calibri', 14), border=0)
 entry_mensaje.bind('<Return>', enviar_mensaje)
 entry_mensaje.place(x = 39, y = 635, width=394, height=40, anchor=tk.SW)
 
@@ -405,9 +429,5 @@ button_enviar = tk.Button(ventana, image=img_enviar, bg=colores['label_c'], bord
 button_enviar.place(x = 475, y = 635, height=40, anchor=tk.SE)
 
 #endregion
-
-
-
-
 
 ventana.mainloop()
