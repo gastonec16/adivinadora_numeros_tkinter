@@ -7,7 +7,7 @@ from tkinter import messagebox
 carpeta = path.dirname(path.realpath(__file__)[0:-7])
 
 ventana = tk.Tk()
-ventana.title('Guasap')
+ventana.title('Wasap')
 ventana.geometry("480x640")
 ventana.resizable(0,0)
 ventana.iconphoto(False, tk.PhotoImage(file=carpeta+'/img/icono.png'))
@@ -68,7 +68,7 @@ def cambiar_tema():
     button_lenguaje.config(bg=colores['arriba'])
     button_tema .config(bg=colores['arriba'])
     button_reiniciar.config(bg=colores['arriba'])
-    button_enviar .config(bg=colores['label_c'])
+    button_enviar.config(bg=colores['label_c'])
     img_fondo.config(file=carpeta+colores['fondo'])
     img_carita.config(file=carpeta+colores['carita'])
     label_carita.config(bg=colores['label_c'])
@@ -235,7 +235,7 @@ def paso_6():
             num_0 = int((estados[5]) / 9)
             num_1 = int((estados[6] - num_0) / 2)
             num_2 = int((estados[6] + num_0) / 2)
-            
+
             if estados[4] == 1:
                 numero_adivinado = str(num_1) + str(num_2)
             else:
