@@ -16,8 +16,6 @@ ventana.iconphoto(False, tk.PhotoImage(file=carpeta+'/img/icono.png'))
 
 textos = español
 colores = colores_claro
-
-hora = strftime('%H:%M')
 mensaje = tk.StringVar()
 mensaje_strip = ''
 lista_chat_c = []
@@ -130,6 +128,8 @@ def enviar_mensaje(event):
 def actualizar_chat(c):
     global posicion_chat
     global primer_chat
+
+    hora = strftime('%H:%M')
 
     if primer_chat > -1:
         lista_label_chat_c[0][primer_chat].place(relx=0)
@@ -274,13 +274,13 @@ label_chat_c_4.place(x = 40, height=33, relx=1)
 label_chat_c_5.place(x = 40, height=33, relx=1)
 label_chat_c_6.place(x = 40, height=33, relx=1)
 
-label_hora_c_0 = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
-label_hora_c_1 = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
-label_hora_c_2 = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
-label_hora_c_3 = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
-label_hora_c_4 = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
-label_hora_c_5 = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
-label_hora_c_6 = tk.Label(ventana, text=hora, bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_c_0 = tk.Label(ventana, text='', bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_c_1 = tk.Label(ventana, text='', bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_c_2 = tk.Label(ventana, text='', bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_c_3 = tk.Label(ventana, text='', bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_c_4 = tk.Label(ventana, text='', bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_c_5 = tk.Label(ventana, text='', bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_c_6 = tk.Label(ventana, text='', bg=colores['label_c'], fg=colores['hora'], font=('Calibri Bold', 8))
 
 label_hora_c_0.place(x = 9, width=31, height=33, relx=1)
 label_hora_c_1.place(x = 9, width=31, height=33, relx=1)
@@ -306,13 +306,13 @@ label_chat_u_4.place(x = 422, height=33, anchor=tk.NE, relx=1)
 label_chat_u_5.place(x = 422, height=33, anchor=tk.NE, relx=1)
 label_chat_u_6.place(x = 422, height=33, anchor=tk.NE, relx=1)
 
-label_hora_u_0 = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
-label_hora_u_1 = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
-label_hora_u_2 = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
-label_hora_u_3 = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
-label_hora_u_4 = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
-label_hora_u_5 = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
-label_hora_u_6 = tk.Label(ventana, text=hora, bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_u_0 = tk.Label(ventana, text='', bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_u_1 = tk.Label(ventana, text='', bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_u_2 = tk.Label(ventana, text='', bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_u_3 = tk.Label(ventana, text='', bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_u_4 = tk.Label(ventana, text='', bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_u_5 = tk.Label(ventana, text='', bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
+label_hora_u_6 = tk.Label(ventana, text='', bg=colores['label_u'], fg=colores['hora'], font=('Calibri Bold', 8))
 
 label_hora_u_0.place(x = 453, width=31, height=33, anchor=tk.NE, relx=1)
 label_hora_u_1.place(x = 453, width=31, height=33, anchor=tk.NE, relx=1)
