@@ -1,17 +1,27 @@
 español={
-    'saludo': '¡Hola! ¿Querés que te adivine un número que pienses?',
-    'c_1': 'Pensá un número de dos cifras (que no sean iguales)',
-    'c_2': 'Invertí el orden de las cifras',
-    'c_3': '¿El nuevo número es mayor o menor que el primero?',
-    'c_4': 'Restá el número que pensaste del nuevo número',
-    'c_5': 'Sumá las cifras del número que pensaste al principio',
-    'c_6': 'Decime los números que obtuviste',
-    'c_7': 'Pensaste el',
-    'u_1': 'Ya está',
-    'u_2': 'Es mayor',
-    'u_3': 'Es menor',
-    'u_4': 'el primero y',
-    'u_5': 'el segundo',
+
+    'c_00': '¡Hola! ¿Querés que te adivine un número que pienses?',
+    'c_01': '¿Querés volver a empezar?',
+
+    'c_10': 'Pensá un número de dos cifras (que no sean iguales)',
+    'c_11': 'Bueno, si no querés no te voy a obligar',
+    'c_12': 'No entiendo tu respuesta. ¿Querés SÍ o NO?',
+
+    'c_20': 'Invertí el orden de las cifras',
+
+    'c_30': '¿El nuevo número es mayor o menor que el primero?',
+
+    'c_40': 'Restá el número que pensaste del nuevo número y decímelo',
+    'c_41': 'Restá el nuevo número del número que pensaste y decímelo',
+    'c_42': 'No entendí. ¿El nuevo número es MAYOR o MENOR?',
+
+    'c_50': 'Sumá las cifras del número del principio y decime el resultado',
+    'c_51': 'Es imposible que dé ese número. Escribilo de nuevo',
+    'c_52': 'Estás escribiendo cualquier cosa. Escribime el resultado',
+
+    'c_60': 'El número que pensaste es el ',
+    'c_61': 'No puede darte ese número. Sacá bien la cuenta',
+    'c_62': 'Escribime el número solamente',
 
     'en_linea': 'En línea'
 }

@@ -8,7 +8,7 @@ carpeta = path.dirname(path.realpath(__file__)[0:-7])
 ventana = tk.Tk()
 ventana.title('Guasap')
 ventana.geometry("480x640")
-# ventana.resizable(0,0)
+ventana.resizable(0,0)
 
 #region variables
 
@@ -17,22 +17,25 @@ colores = colores_claro
 
 hora = strftime('%H:%M')
 mensaje = tk.StringVar()
-lista_chat_c = []
+mensaje_strip = ''
 lista_chat_c = []
 paso = 0
 chat_c = ''
 posicion_chat = 0
 primer_chat = 0
+posiciones_label_chat_c = (553, 469, 385, 301, 217, 133, 49, 553, 469, 385, 301, 217, 133, 49, 553, 469, 385, 301, 217, 133, 49)
+posiciones_label_chat_u = (511, 427, 343, 259, 175, 91, 7, 511, 427, 343, 259, 175, 91, 7, 511, 427, 343, 259, 175, 91, 7)
+estados = [0, 0, 0, 0, 0, 0, 0]
 
 #endregion
 
 #region funciones
 
-def actualizar_chat(u, c):
+def actualizar_chat(c):
     global posicion_chat
     global primer_chat
 
-    if primer_chat <= 6:
+    if primer_chat > -1:
         lista_label_chat_c[0][primer_chat].place(relx=0)
         lista_label_chat_c[1][primer_chat].place(relx=0)
 
@@ -40,74 +43,118 @@ def actualizar_chat(u, c):
         lista_label_chat_u[1][primer_chat].place(relx=0)
         lista_label_chat_u[2][primer_chat].place(relx=0)
 
-        primer_chat += 1
+        if primer_chat == 0:
+            primer_chat = 7
+        primer_chat -= 1
 
-    for i in range(posicion_chat, posicion_chat+7):
-        if i == posicion_chat:
-            lista_label_chat_c[0][posicion_chat].configure(text=c)
-            lista_label_chat_c[1][posicion_chat].configure(text=hora)
+    lista_label_chat_c[0][posicion_chat].configure(text=c)
+    lista_label_chat_c[1][posicion_chat].configure(text=hora)
 
-            lista_label_chat_u[0][posicion_chat].configure(text=u)
-            lista_label_chat_u[1][posicion_chat].configure(text=hora)
+    lista_label_chat_u[0][posicion_chat].configure(text=entry_mensaje.get())
+    lista_label_chat_u[1][posicion_chat].configure(text=hora)
         
-        lista_label_chat_c[0][i-posicion_chat].configure(text=c)
-        lista_label_chat_c[0][i-posicion_chat].place(y = 553-(i-posicion_chat)*84)
-        lista_label_chat_c[1][i-posicion_chat].configure(text=hora)
-        lista_label_chat_c[1][i-posicion_chat].place(y = 553-(i-posicion_chat)*84)
+    for i in range(7):
+        lista_label_chat_c[0][i].place(y = posiciones_label_chat_c[i-posicion_chat+7])
+        lista_label_chat_c[1][i].place(y = posiciones_label_chat_c[i-posicion_chat+7])
 
-        lista_label_chat_u[0][i-posicion_chat].configure(text=u)
-        lista_label_chat_u[0][i-posicion_chat].place(y = 511-(i-posicion_chat)*84)
-        lista_label_chat_u[1][i-posicion_chat].configure(text=hora)
-        lista_label_chat_u[1][i-posicion_chat].place(y = 511-(i-posicion_chat)*84)
-        lista_label_chat_u[2][i-posicion_chat].place(y = 511-(i-posicion_chat)*84)
+        lista_label_chat_u[0][i].place(y = posiciones_label_chat_u[i-posicion_chat+7])
+        lista_label_chat_u[1][i].place(y = posiciones_label_chat_u[i-posicion_chat+7])
+        lista_label_chat_u[2][i].place(y = posiciones_label_chat_u[i-posicion_chat+7])
 
-    print(posicion_chat)
-    if posicion_chat >= 6:
-        posicion_chat = 0
+    if posicion_chat == 0:
+        posicion_chat = 6
     else:
-        posicion_chat += 1
+        posicion_chat -= 1
 
-def paso_0():
-    chat_c = textos['saludo']
-    # lista_label_chat_c[posicion_chat] = chat_c
-    actualizar_chat(entry_mensaje.get(), chat_c)
+    entry_mensaje.delete(0, tk.END)
+
+def verificar_palabras(texto, palabras):
+    for i in palabras:
+        if texto == i:
+            return True
+    else:
+        return False
+
+def paso_0(estado):
+    global paso
+    actualizar_chat(textos['c_0' + str(estado)])
+    estados[0] = 1
+    paso = 1
 
 def paso_1():
-    pass
-
+    global paso
+    if verificar_palabras(mensaje_strip, ['sí', 'si', 'no']):
+        if mensaje_strip == 'sí' or mensaje_strip == 'si':
+            actualizar_chat(textos['c_10'])
+            paso = 2
+        else:
+            paso = 0
+            estados[0] = 0
+            actualizar_chat(textos['c_11'])
+    else:
+        actualizar_chat(textos['c_12'])
+        
 def paso_2():
-    pass
+    global paso
+    actualizar_chat(textos['c_20'])
+    paso = 3
 
 def paso_3():
-    pass
+    global paso
+    actualizar_chat(textos['c_30'])
+    paso = 4
 
 def paso_4():
-    pass
+    global paso
+    if verificar_palabras(mensaje_strip, ['mayor', 'es mayor', 'menor', 'es menor']):
+        if mensaje_strip == 'mayor' or mensaje_strip == 'es mayor':
+            actualizar_chat(textos['c_40'])
+            estados[4] = 1
+            paso = 5
+        else:
+            actualizar_chat(textos['c_41'])
+            estados[4] = 2
+            paso = 5
+    else:
+        actualizar_chat(textos['c_42'])
 
 def paso_5():
-    pass
+    global paso
+    try:
+        if int(mensaje_strip) < 99:
+            actualizar_chat(textos['c_50'])
+            estados[5] = int(mensaje_strip)
+            paso = 6
+        else:
+            actualizar_chat(textos['c_51'])
+    except:
+        actualizar_chat(textos['c_52'])
 
 def paso_6():
-    pass
+    global paso
+    try:
+        if int(mensaje_strip) < 18:
+            estados[6] = int(mensaje_strip)
 
-def paso_7():
-    pass
+            num_1 = int((estados[6] - 2) / 2)
+            num_2 = int((estados[6] + 2) / 2)
+            numero_adivinado = str(num_1) + str(num_2)
 
-def paso_8():
-    pass
+            actualizar_chat(textos['c_60'] + numero_adivinado)
+            paso = 0
+        else:
+            actualizar_chat(textos['c_61'])
+    except:
+        actualizar_chat(textos['c_62'])
 
-def paso_9():
-    pass
-
-def paso_10():
-    pass
 
 def enviar():
-    mensaje_strip = mensaje.get().strip()
+    global mensaje_strip
+    mensaje_strip = mensaje.get().strip().lower()
     if mensaje_strip != '':
         match paso:
             case 0:
-                paso_0()
+                paso_0(estados[0])
             case 1:
                 paso_1()
             case 2:
@@ -120,14 +167,6 @@ def enviar():
                 paso_5()
             case 6:
                 paso_6()
-            case 7:
-                paso_7()
-            case 8:
-                paso_8()
-            case 9:
-                paso_9()
-            case 10:
-                paso_10()
 
 
 img_fondo = tk.PhotoImage(file=carpeta+colores['fondo'])
@@ -238,7 +277,7 @@ lista_label_chat_c = [[
 
 lista_label_chat_u = [[
     label_chat_u_0,
-    label_hora_u_1,
+    label_chat_u_1,
     label_chat_u_2,
     label_chat_u_3,
     label_chat_u_4,
