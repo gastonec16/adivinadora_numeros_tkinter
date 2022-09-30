@@ -217,7 +217,7 @@ def paso_4():
 def paso_5():
     global paso
     try:
-        if int(mensaje_strip) <= 81 and int(mensaje_strip) > 9 and int(mensaje_strip) % 9 == 0:
+        if int(mensaje_strip) <= 81 and int(mensaje_strip) >= 9 and int(mensaje_strip) % 9 == 0:
             actualizar_chat(textos['c_50'])
             estados[5] = int(mensaje_strip)
             paso = 6
@@ -229,7 +229,7 @@ def paso_5():
 def paso_6():
     global paso
     try:
-        if int(mensaje_strip) < 18 and int(mensaje_strip) > 2:
+        if int(mensaje_strip) < 18 and int(mensaje_strip) > 0:
             estados[6] = int(mensaje_strip)
 
             num_0 = int((estados[5]) / 9)
