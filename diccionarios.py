@@ -16,11 +16,11 @@ español={
     'c_42': 'No entendí. ¿El nuevo número es MAYOR o MENOR?',
 
     'c_50': 'Sumá las cifras del número del principio y decime el resultado',
-    'c_51': 'Es imposible que dé ese número. Escribilo de nuevo',
+    'c_51': 'Mmm... No creo que te haya dado eso. Sacá bien la cuenta',
     'c_52': 'Estás escribiendo cualquier cosa. Escribime el resultado',
 
     'c_60': 'El número que pensaste es el ',
-    'c_61': 'No puede darte ese número. Sacá bien la cuenta',
+    'c_61': 'Es imposible que ese sea el resultado. Sumá bien los números',
     'c_62': 'Escribime el número solamente',
 
     'en_linea': 'En línea',
