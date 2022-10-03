@@ -2,15 +2,10 @@ import tkinter as tk
 from os import path
 from time import strftime
 from diccionarios import *
-from tkinter import messagebox
 
 carpeta = path.dirname(path.realpath(__file__)[0:-7])
 
 ventana = tk.Tk()
-ventana.title('Wasap')
-ventana.geometry("480x640")
-ventana.resizable(0,0)
-ventana.iconphoto(False, tk.PhotoImage(file=carpeta+'/img/icono.png'))
 
 #region variables
 
@@ -27,8 +22,15 @@ posiciones_label_chat_c = (553, 469, 385, 301, 217, 133, 49, 553, 469, 385, 301,
 posiciones_label_chat_u = (511, 427, 343, 259, 175, 91, 7, 511, 427, 343, 259, 175, 91, 7)
 estados = [0, 0, 0, 0, 0, 0, 0]
 tema = 0
+idioma = 0
 
 #endregion
+
+texto_idioma = textos['idioma']
+ventana.title(f'Wasap ({texto_idioma})')
+ventana.geometry("480x640")
+ventana.resizable(0,0)
+ventana.iconphoto(False, tk.PhotoImage(file=carpeta+'/img/icono.png'))
 
 #region menu
 
@@ -46,11 +48,22 @@ def volver():
     button_enviar.config(state='normal')
     button_reiniciar.config(state='normal')
 
-def cambiar_lenguaje():
-    messagebox.showerror('Error', 'No hay otros idiomas instalados actualmente')
+def cambiar_idioma():
+    global idioma
+    global textos
+    if idioma == 0:
+        textos = ingles
+        idioma = 1
+    else:
+        textos = español
+        idioma = 0
+    label_en_linea.config(text=textos['en_linea'])
+    texto_idioma = textos['idioma']
+    ventana.title(f'Wasap ({texto_idioma})')
 
 def cambiar_tema():
     global tema
+    global colores
     if tema == 0:
         colores = colores_oscuro
         tema = 1
@@ -63,7 +76,7 @@ def cambiar_tema():
     button_foto_grande.config(bg=colores['arriba'])
     label_clotilde.config(bg=colores['arriba'])
     label_en_linea.config(bg=colores['arriba'])
-    button_lenguaje.config(bg=colores['arriba'])
+    button_idioma.config(bg=colores['arriba'])
     button_tema .config(bg=colores['arriba'])
     button_reiniciar.config(bg=colores['arriba'])
     button_enviar.config(bg=colores['label_c'])
@@ -179,8 +192,8 @@ def paso_0(estado):
 
 def paso_1():
     global paso
-    if verificar_palabras(mensaje_strip, ['sí', 'si', 'no']) or mensaje_strip == textos['reiniciar'].lower():
-        if mensaje_strip == 'sí' or mensaje_strip == 'si' or mensaje_strip == textos['reiniciar'].lower():
+    if verificar_palabras(mensaje_strip, lista_si + lista_no) or mensaje_strip == textos['reiniciar'].lower():
+        if mensaje_strip in lista_si or mensaje_strip == textos['reiniciar'].lower():
             actualizar_chat(textos['c_1'+str(estados[1])])
             paso = 2
         else:
@@ -202,8 +215,8 @@ def paso_3():
 
 def paso_4():
     global paso
-    if verificar_palabras(mensaje_strip, ['mayor', 'es mayor', 'menor', 'es menor']):
-        if mensaje_strip == 'mayor' or mensaje_strip == 'es mayor':
+    if verificar_palabras(mensaje_strip, lista_mayor + lista_menor):
+        if mensaje_strip in lista_mayor:
             actualizar_chat(textos['c_40'])
             estados[4] = 1
             paso = 5
@@ -255,7 +268,7 @@ img_fondo = tk.PhotoImage(file=carpeta+colores['fondo'])
 img_visto = tk.PhotoImage(file=carpeta+'/img/visto.png')
 
 label_fondo = tk.Label(ventana, image=img_fondo)
-label_fondo.place(x = -2, y = 0)
+label_fondo.place(x = -2, y = -2)
 
 #region labels_chat
 
@@ -390,7 +403,7 @@ lista_label_chat_u = [[
 img_enviar = tk.PhotoImage(file=carpeta+'/img/enviar.png')
 img_foto = tk.PhotoImage(file=carpeta+'/img/foto.png')
 img_foto_grande = tk.PhotoImage(file=carpeta+'/img/foto_grande.png')
-img_lenguaje = tk.PhotoImage(file=carpeta+'/img/lenguaje.png')
+img_idioma = tk.PhotoImage(file=carpeta+'/img/idioma.png')
 img_reiniciar = tk.PhotoImage(file=carpeta+'/img/reiniciar.png')
 img_tema = tk.PhotoImage(file=carpeta+'/img/tema.png')
 img_carita = tk.PhotoImage(file=carpeta+colores['carita'])
@@ -410,8 +423,8 @@ label_clotilde.place(x = 60, y = 11)
 label_en_linea = tk.Label(ventana, text=textos['en_linea'], bg=colores['arriba'], fg=colores['letra_arriba'], font=('Calibri', 10))
 label_en_linea.place(x = 61, y = 33)
 
-button_lenguaje = tk.Button(ventana, image=img_lenguaje, bg=colores['arriba'], border=0, cursor='hand2', command=cambiar_lenguaje)
-button_lenguaje.place(x = 379, y = 29, width=22, anchor=tk.E)
+button_idioma = tk.Button(ventana, image=img_idioma, bg=colores['arriba'], border=0, cursor='hand2', command=cambiar_idioma)
+button_idioma.place(x = 379, y = 29, width=22, anchor=tk.E)
 
 button_tema = tk.Button(ventana, image=img_tema, bg=colores['arriba'], border=0, cursor='hand2', command=cambiar_tema)
 button_tema.place(x = 423, y = 29, width=22, anchor=tk.E)
